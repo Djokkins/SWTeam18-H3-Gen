@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Boundary;
@@ -7,8 +6,9 @@ using MicrowaveOvenClasses.Interfaces;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
-namespace MicrowaveTestIntegration
+namespace MicrowaveOven.Integration.Test
 {
     [TestFixture]
     class PowerTube_IT1
@@ -46,7 +46,7 @@ namespace MicrowaveTestIntegration
         public void powertube_activation() // tester om powertube bliver aktiveret af cookcontroller
         {
             int power = 90;
-            cooker.StartCooking(power, TimeSpan.FromMinutes(1));
+         //   cooker.StartCooking(power, TimeSpan.FromMinutes(1));
             Assert.That(_uut, Is.EqualTo(power));
         }
 
