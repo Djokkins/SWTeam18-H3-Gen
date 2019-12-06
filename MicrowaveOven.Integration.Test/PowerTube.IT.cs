@@ -1,6 +1,7 @@
 ﻿using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Interfaces;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace MicrowaveOven.Integration.Test
@@ -17,10 +18,10 @@ namespace MicrowaveOven.Integration.Test
         [SetUp]
         public void SetUp()
         {
+            fake_output = Substitute.For<IOutput>();
+            fake_display = Substitute.For<IDisplay>();
             _uut = new PowerTube(fake_output);
-            fake_output = new Output();
-            fake_display = new Display(fake_output);
-            fake_timer = new MicrowaveOvenClasses.Boundary.Timer();
+            fake_timer = Substitute.For<ITimer>();
             cooker = new CookController(fake_timer, fake_display, _uut);
         }
 
@@ -29,7 +30,7 @@ namespace MicrowaveOven.Integration.Test
         {
             int power = 50;
             cooker.StartCooking(power, 1);
-            Assert.That(fake_output, Is.EqualTo(power));
+            fake_output.Received().OutputLine($"PowerTube works with {power} %");
         }
 
         [Test]
@@ -37,7 +38,7 @@ namespace MicrowaveOven.Integration.Test
         {
             int power = 150;
             cooker.StartCooking(power, 1);
-            Assert.That(fake_output, Is.EqualTo(power));
+            fake_output.Received().OutputLine($"PowerTube works with {power} %");
         }
 
         [Test]
@@ -45,31 +46,26 @@ namespace MicrowaveOven.Integration.Test
         {
             int power = 700;
             cooker.StartCooking(power, 1);
-            Assert.That(fake_output, Is.EqualTo(power));
-        }
-
-        [Test]
-        public void powertube_activation_negative3() // tester om powertube bliver aktiveret af cookcontroller
-        {
-            int power = -3;
-            cooker.StartCooking(power, 1);
-            Assert.That(fake_output, Is.EqualTo(power));
+            fake_output.Received().OutputLine($"PowerTube works with {power} %");
         }
 
         [Test]
         public void powertube_stop_50()
         {
-            cooker.StartCooking(50, 1);
+            int power = 50;
+            cooker.StartCooking(power, 1);
             cooker.Stop();
-            Assert.That(_uut, Is.EqualTo(0) );
+            fake_output.Received().OutputLine($"PowerTube turned off");
         }
 
         [Test]
         public void powertube_stop_60()
         {
-            cooker.StartCooking(60, 1);
+            int power = 60;
+            cooker.StartCooking(power, 1);
             cooker.Stop();
-            Assert.That(fake_output, Is.EqualTo(0));
+            fake_output.Received().OutputLine($"PowerTube turned off");
         }
+
     }
 }
