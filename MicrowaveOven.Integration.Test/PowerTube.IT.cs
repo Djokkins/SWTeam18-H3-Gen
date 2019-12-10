@@ -30,7 +30,7 @@ namespace MicrowaveOven.Integration.Test
         {
             int power = 50;
             cooker.StartCooking(power, 1);
-            fake_output.Received().OutputLine($"PowerTube works with {power} %");
+            fake_output.Received().OutputLine($"PowerTube works with {power} W");
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace MicrowaveOven.Integration.Test
         {
             int power = 150;
             cooker.StartCooking(power, 1);
-            fake_output.Received().OutputLine($"PowerTube works with {power} %");
+            fake_output.Received().OutputLine($"PowerTube works with {power} W");
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace MicrowaveOven.Integration.Test
         {
             int power = 700;
             cooker.StartCooking(power, 1);
-            fake_output.Received().OutputLine($"PowerTube works with {power} %");
+            fake_output.Received().OutputLine($"PowerTube works with {power} W");
         }
 
         [Test]
